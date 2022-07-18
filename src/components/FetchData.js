@@ -1,10 +1,17 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 export default function FetchData(API){
   const [data, setData] = useState([])
-  fetch(API)
-    .then((res) => res.json())
-    .then((res) => {
-      console.log(res)
-      setData(res)
-    })
+  const fetchData = () => {
+    fetch(API)
+      .then((res) => res.json())
+      .then((res) => {
+        setData(res)
+      })
+  }
+  
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+    return data;
   }

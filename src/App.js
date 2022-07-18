@@ -1,10 +1,9 @@
 
-import Initial from "./components/Initial";
-
+import TestResult from "./components/Test";
 function App() {
   return (
     <>
-    <Initial/>
+    <TestResult/>
     </>
   );
 }

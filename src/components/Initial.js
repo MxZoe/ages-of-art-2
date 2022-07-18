@@ -9,7 +9,6 @@ export default function Initial() {
     fetch(API)
       .then((res) => res.json())
       .then((res) => {
-        console.log(res)
         setData(res)
       })
   }
@@ -17,14 +16,14 @@ export default function Initial() {
   useEffect(() => {
     fetchData()
   }, [])
-
-  //const newID = data.objectIDs[RandomRange(0,46514)]
-  const newUrl = `https://collectionapi.metmuseum.org/public/collection/v1/objects/206321`
+  const UpperBound = data.total - 1;
+  let newNum = RandomRange(0, UpperBound);
+  const IDArray = data.objectIDs[newNum];
+  let newUrl = `https://collectionapi.metmuseum.org/public/collection/v1/objects/${IDArray}`
   const fetchNewData = () => {
     fetch(newUrl)
       .then((res) => res.json())
       .then((res) => {
-        console.log(res)
         setNewData(res)
       })
   }
@@ -36,7 +35,6 @@ export default function Initial() {
   return(
 
     <>
-    {data.total}
     {newData.title}
     </>
   )

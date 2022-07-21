@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import RandomRange from "./RandomRange";
 import { paintings } from "../data"
 //import "./PaintingCardStyles.css"
-import { Card } from "./Card";
 
 export default function PaintingCard(){
   const [data, setData] = useState([])
@@ -22,14 +21,11 @@ export default function PaintingCard(){
   useEffect(() => {
     fetchData()
   }, [])
-  const newCard = Card({title: data.title, primaryImage: data.primaryImage, yearBegin: data.objectYearBegin, YearEnd: data.objectYearEnd})
-  return (
-    <>
-      <div>
-      </div>
-    </>
-  );
-
-  
+  return(
+    data
+  )
 }
+
+ 
+
 

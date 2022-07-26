@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import RandomRange from "./RandomRange";
 import { paintings } from "../data"
-//import "./PaintingCardStyles.css"
+import "./PaintingCardStyles.css"
+import { Card } from "./Card";
 
 export default function PaintingCard(){
   const [data, setData] = useState([])
@@ -21,8 +22,13 @@ export default function PaintingCard(){
   useEffect(() => {
     fetchData()
   }, [])
+  const card = Card(data.title, data.primaryImage, data.objectYearBegin, data.objectYearEnd)
   return(
-    data
+    <div>
+      <h3>{card.title}</h3>
+      <img src={card.primaryImage}></img>
+      <h5>{card.yearBegin}-{card.yearEnd}</h5>
+    </div>
   )
 }
 

@@ -1,19 +1,18 @@
-import { Droppable } from "react-beautiful-dnd";
-import PaintingCard from "./PaintingCard";
-import { Card } from "./Card"
-let cardArray = [];
-function getData(){
-  return (PaintingCard())
-}
-function newCard(data){
-  const card = Card(data.title, data.primaryImage, data.objectYearBegin, data.objectYearEnd)
-  cardArray.push(card);
-}
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { initialData } from "./initial-data";
+import { useState } from "react";
+import styled from "styled-components";
+
+
+
 export default function GamePage(){
-  newCard(getData());
+  const [art, setArt] = useState(initialData.startArt);
+  const [startZone, setStart] = useState(initialData.startZone)
+ 
+  
+  
   return(
     <div>
-      <h1>{cardArray[0].title}</h1>
     </div>
   )
 }

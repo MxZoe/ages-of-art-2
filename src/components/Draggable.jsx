@@ -7,7 +7,14 @@ export function Draggable(props) {
   });
   const style = transform ? {
     transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-  } : undefined;
+    minWidth: 70,
+    maxWidth: 70,
+    minHeight: 110,
+    maxHeight: 110
+  } : {minWidth: 70,
+    maxWidth: 70,
+    minHeight: 110,
+    maxHeight: 110};
 
   
   return (

@@ -5,30 +5,39 @@ import {Droppable} from './components/Droppable';
 import {Draggable} from './components/Draggable';
 
 export default function App() {
-  const containers = ['A', 'B', 'C'];
-  const [parent, setParent] = useState(null);
+  const startStyle = {
+    margin: "45%, 45%, 5%, 5%",
+    minWidth: 70,
+    maxWidth: 70,
+    minHeight: 110,
+    maxHeight: 110
+  }
+
+  const timelineData = ['B']
+  const [timeline, setTimeline] = useState(null);
   const draggableMarkup = (
     <Draggable id="draggable">Drag me</Draggable>
   );
 
+
   return (
     <DndContext onDragEnd={handleDragEnd}>
-      {parent === null ? draggableMarkup : null}
-
-      {containers.map((id) => (
-        // We updated the Droppable component so it would accept an `id`
-        // prop and pass it to `useDroppable`
-        <Droppable key={id} id={id}>
-          {parent === id ? draggableMarkup : 'Drop here'}
-        </Droppable>
-      ))}
+      <div style={startStyle}>
+        {timeline === null ? draggableMarkup : null}
+      </div>
+      
+       {timelineData.map((id) => (
+       
+       <Droppable key={id} id={id}>
+         {timeline === id ? draggableMarkup : null}
+       </Droppable>
+     ))}
     </DndContext>
   );
 
   function handleDragEnd(event) {
     const {over} = event;
 
-  
-    setParent(over ? over.id : null);
+    setTimeline(over ? over.id : null);
   }
 };

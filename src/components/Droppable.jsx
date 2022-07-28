@@ -7,6 +7,9 @@ export function Droppable(props) {
   });
   const style = {
     color: isOver ? 'green' : undefined,
+    minWidth: 110,
+    minHeight: 110,
+    border: "5px solid gray"
   };
   
   

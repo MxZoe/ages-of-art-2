@@ -2,7 +2,7 @@ import React from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
-const SortableItem = (props) => {
+const SortableItem = (props, style) => {
   const {
     attributes,
     listeners,
@@ -28,7 +28,7 @@ const SortableItem = (props) => {
   };
 
   return (
-    <div style={itemStyle} ref={setNodeRef} {...attributes} {...listeners}>
+    <div style={style} ref={setNodeRef} {...attributes} {...listeners}>
       Item {props.id}
     </div>
   );

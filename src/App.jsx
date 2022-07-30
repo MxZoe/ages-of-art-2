@@ -16,9 +16,17 @@ import { arrayMove, insertAtIndex, removeAtIndex } from "./utils/array";
 function App() {
 
   const [items, setItems] = useState({
-    group1: [RandomRange(1,1000)],
+    group1: [RandomRange(1,1000)],  
     group2: [RandomRange(1,1000)],
   })
+  const droppableStyle = {
+    padding: "20px 10px",
+    border: "1px solid black",
+    borderRadius: "5px",
+    minWidth: 110,
+    minHeight: 110,
+    margin: "5% 0% 5% 0%",
+  };
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -110,7 +118,9 @@ function App() {
     };
   };
 
+
   const containerStyle = { display: "flex"};
+  const seperateStyle ={margin: "5% 40% 5% 40%"}
 
   return (
     <DndContext
@@ -118,11 +128,14 @@ function App() {
       onDragEnd={handleDragEnd}
       onDragOver={handleDragOver}
     >
-      <div style={containerStyle}>
+      <div style={seperateStyle}>
+        
         {Object.keys(items).map((group) => (
-          <Droppable id={group} items={items[group]} key={group} />
+          
+          <Droppable id={group} items={items[group]} key={group} style={testStyle}/>
         ))}
       </div>
+      
     </DndContext>
   );
 }

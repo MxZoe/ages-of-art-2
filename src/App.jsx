@@ -10,7 +10,6 @@ import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import RandomRange from "./components/RandomRange";
 import Droppable from "./components/Droppable";
 import { arrayMove, insertAtIndex, removeAtIndex } from "./utils/array";
-import { restrictToHorizontalAxis } from "@dnd-kit/modifiers";
 
 
 function App() {
@@ -19,6 +18,15 @@ function App() {
     group1: [RandomRange(1,1000),RandomRange(1,1000), RandomRange(1,1000), RandomRange(1,1000), RandomRange(1,1000),RandomRange(1,1000)],  
   })
 
+  const[isSorted, setSorted] = useState(false);
+
+  const sortedGroup = [...items.group1].sort();
+
+  function checkSorted(items, sorted){
+    if(items==sorted){
+      setSorted(true)
+    }
+  }
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -46,20 +54,14 @@ function App() {
         const activeIndex = active.data.current.sortable.index;
         const overIndex = over.data.current?.sortable.index || 0;
 
-        return moveBetweenContainers(
-          items,
-          activeContainer,
-          activeIndex,
-          overContainer,
-          overIndex,
-          active.id
-        );
+        
       });
     }
   };
 
  
-  const handleDragEnd = ({ active, over, sorted }) => {
+  
+  const handleDragEnd = ({ active, over }) => {
     if (!over) {
       return;
     }
@@ -69,7 +71,8 @@ function App() {
       const overContainer = over.data.current?.sortable.containerId || over.id;
       const activeIndex = active.data.current.sortable.index;
       const overIndex = over.data.current?.sortable.index || 0;
-      
+      checkSorted(items.group1, [...items.group1].sort());
+      console.log(isSorted)
       setItems((items) => {
         let newItems;
         if (activeContainer === overContainer) {
@@ -81,42 +84,18 @@ function App() {
               overIndex
             )
           };
-        } else {
-          newItems = moveBetweenContainers(
-            items,
-            activeContainer,
-            activeIndex,
-            overContainer,
-            overIndex,
-            active.id
-          );
+        } 
           
-        }
-        if(items.group1.sort() === items.group1){
-          sorted = {display:"block"}
+        
+       
           return newItems;
-        } else{
-          return newItems;
-        }
+          
+        
         
       });      
     }
   };
 
-  const moveBetweenContainers = (
-    items,
-    activeContainer,
-    activeIndex,
-    overContainer,
-    overIndex,
-    item
-  ) => {
-    return {
-      ...items,
-      [activeContainer]: removeAtIndex(items[activeContainer], activeIndex),
-      [overContainer]: insertAtIndex(items[overContainer], overIndex, item)
-    };
-  };
 
 
   const containerStyle = { display: "flex"};
@@ -130,7 +109,7 @@ function App() {
     margin: "5% 40% 5% 40%",
   };
  
-  let sortDisplay={display: "none"}
+  const sortDisplay = isSorted ? {display: "inline"} : {display:"none"}
   return (
     
     <DndContext

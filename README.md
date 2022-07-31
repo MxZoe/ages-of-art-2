@@ -1,4 +1,24 @@
-# Getting Started with Create React App
+# Ages of Art
+## Zoe Weinstein
+
+## About
+Ages of art is a game modeled off of https://wikitrivia.tomjwatson.com/. However it has been changed to generate a randomly assorted set amount of paintings which the user must drag into the correct chronilogical order. This is a capstone project for the epicodus bootcamp.
+
+## Bugs and Issues
+Currently random numbers are being used as a placeholder for the paintings. There have been issues using dnd-kit to make the draggable items arranged horizontally.
+
+## Future plans
+In addition to adding the actual paintings, I would like to add a field for the user to select an era/region of art or an artist.
+
+## Technologies used
+HTML
+CSS
+React/JSX
+Javascript
+@dnd-kit
+The Met API
+Fetch api
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -68,3 +88,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## License info
+Zoe Weinstein, 2022. MIT License https://opensource.org/licenses/MIT

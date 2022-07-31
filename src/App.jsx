@@ -17,14 +17,17 @@ function App() {
   const [items, setItems] = useState({
     group1: [],  
   })
-  const [value, setValue] =useState(4);
+  const [hasChanged, setChange] = useState(false);
+  //const [value, setValue] =useState(4);
   let newItems = {...items}
+  let value = 0;
   const handleChange = (event) => {
-    setValue(event.target.value);
+    value = event.target.value;
     
-    for(let i=0;i<=value; i++){
+    for(let i=0;i<value; i++){
       newItems.group1.push(RandomRange(1,1000));
     }
+    setChange(true);
     setItems(newItems);
     
   }
@@ -114,7 +117,7 @@ function App() {
  
   const sortDisplay = checkSorted(items.group1, sortedGroup) ? {display: "inline"} : {display:"none"}
   const correctStyle = {margin: "5%  35% 5% 35%"}
-  const dropdownStyle = {display: "inline",margin: "5%  35% 5% 35%"}
+  const dropdownStyle = hasChanged ? {display: "none"}:{display: "inline",margin: "5%  35% 5% 35%"}
   const optionStyle = {margin: "5%  35% 5% 35%"}
   const labelStyle = {margin: "0% 1% 0% 0%"}
   return (

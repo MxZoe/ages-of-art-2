@@ -2,7 +2,7 @@ import React from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
-const SortableItem = (props, style) => {
+const SortableItem = (props) => {
   const {
     attributes,
     listeners,
@@ -14,8 +14,8 @@ const SortableItem = (props, style) => {
   const itemStyle = {
     transform: CSS.Transform.toString(transform),
     transition,
-    width: 110,
-    height: 30,
+    width: 50,
+    height: 50,
     display: "flex",
     alignItems: "center",
     paddingLeft: 5,
@@ -28,8 +28,9 @@ const SortableItem = (props, style) => {
   };
 
   return (
-    <div style={style} ref={setNodeRef} {...attributes} {...listeners}>
-      Item {props.id}
+    <div style={itemStyle} ref={setNodeRef} {...attributes} {...listeners}>
+      {props.id}
+
     </div>
   );
 };

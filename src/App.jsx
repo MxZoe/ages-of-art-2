@@ -10,23 +10,16 @@ import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import RandomRange from "./components/RandomRange";
 import Droppable from "./components/Droppable";
 import { arrayMove, insertAtIndex, removeAtIndex } from "./utils/array";
-
+import { restrictToHorizontalAxis } from "@dnd-kit/modifiers";
 
 
 function App() {
 
   const [items, setItems] = useState({
-    group1: [RandomRange(1,1000)],  
-    group2: [RandomRange(1,1000)],
+    group1: [RandomRange(1,1000),RandomRange(1,1000), RandomRange(1,1000), RandomRange(1,1000), RandomRange(1,1000),RandomRange(1,1000)],  
   })
-  const droppableStyle = {
-    padding: "20px 10px",
-    border: "1px solid black",
-    borderRadius: "5px",
-    minWidth: 110,
-    minHeight: 110,
-    margin: "5% 0% 5% 0%",
-  };
+
+
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -65,7 +58,8 @@ function App() {
     }
   };
 
-  const handleDragEnd = ({ active, over }) => {
+ 
+  const handleDragEnd = ({ active, over, sorted }) => {
     if (!over) {
       return;
     }
@@ -75,7 +69,7 @@ function App() {
       const overContainer = over.data.current?.sortable.containerId || over.id;
       const activeIndex = active.data.current.sortable.index;
       const overIndex = over.data.current?.sortable.index || 0;
-
+      
       setItems((items) => {
         let newItems;
         if (activeContainer === overContainer) {
@@ -96,10 +90,16 @@ function App() {
             overIndex,
             active.id
           );
+          
         }
-
-        return newItems;
-      });
+        if(items.group1.sort() === items.group1){
+          sorted = {display:"block"}
+          return newItems;
+        } else{
+          return newItems;
+        }
+        
+      });      
     }
   };
 
@@ -121,22 +121,37 @@ function App() {
 
   const containerStyle = { display: "flex"};
   const seperateStyle ={margin: "5% 40% 5% 40%"}
-
+  const droppableStyle0 = {
+    padding: "20px 10px",
+    border: "1px solid black",
+    borderRadius: "5px",
+    maxHeight: 1000,
+    maxWidth: 70,
+    margin: "5% 40% 5% 40%",
+  };
+ 
+  let sortDisplay={display: "none"}
   return (
+    
     <DndContext
+    
       sensors={sensors}
       onDragEnd={handleDragEnd}
       onDragOver={handleDragOver}
     >
-      <div style={seperateStyle}>
-        
-        {Object.keys(items).map((group) => (
-          
-          <Droppable id={group} items={items[group]} key={group} style={testStyle}/>
-        ))}
+      <div className="sorted" style={sortDisplay}>
+      <h1>Paintings Sorted!!!</h1>
       </div>
+
+        {Object.keys(items).map((group) => (
+          <Droppable id={group} items={items[group]} key={group} style={droppableStyle0}/>
+        ))}
+      
+        
+
       
     </DndContext>
+    
   );
 }
 

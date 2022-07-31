@@ -9,12 +9,12 @@ export function Draggable(props) {
     transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
     minWidth: 70,
     maxWidth: 70,
-    minHeight: 110,
-    maxHeight: 110
+    minHeight: 70,
+    maxHeight: 70
   } : {minWidth: 70,
     maxWidth: 70,
-    minHeight: 110,
-    maxHeight: 110};
+    minHeight: 70,
+    maxHeight: 70};
 
   
   return (

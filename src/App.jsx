@@ -17,6 +17,7 @@ function App() {
   const [items, setItems] = useState({
     group1: [],  
   })
+  
   const [hasChanged, setChange] = useState(false);
   //const [value, setValue] =useState(4);
   let newItems = {...items}
@@ -29,7 +30,15 @@ function App() {
     }
     setChange(true);
     setItems(newItems);
-    
+  }
+
+  const handleRandom = () =>{
+    value=RandomRange(1,10);
+    for(let i=0;i<value; i++){
+      newItems.group1.push(RandomRange(1,1000));
+    }
+    setChange(true);
+    setItems(newItems);
   }
 
   let isSorted = false;
@@ -118,8 +127,8 @@ function App() {
   const sortDisplay = checkSorted(items.group1, sortedGroup) ? {display: "inline"} : {display:"none"}
   const correctStyle = {margin: "5%  35% 5% 35%"}
   const dropdownStyle = hasChanged ? {display: "none"}:{display: "inline",margin: "5%  35% 5% 35%"}
-  const optionStyle = {margin: "5%  35% 5% 35%"}
   const labelStyle = {margin: "0% 1% 0% 0%"}
+  const uiStyle = {margin: "0%  35% 0% 35%"}
   return (
     
     <DndContext
@@ -128,11 +137,12 @@ function App() {
       onDragEnd={handleOnDragEnd}
       onDragOver={handleDragOver}
     >
-     
+      
       <div style={dropdownStyle}>
       <label>
        <span style={labelStyle}>Choose how many numbers: </span>   
-        <select value={value} onChange={handleChange} style={optionStyle}>
+       <button onClick={handleRandom} style={uiStyle}>Random</button>
+        <select value={value} onChange={handleChange} style={uiStyle}>
         <option value={0}></option>
           <option value={3}>3</option>
           <option value={4}>4</option>
@@ -141,6 +151,7 @@ function App() {
           <option value={7}>7</option>
         </select>
       </label>
+      
       </div>
       <div className="sorted" style={sortDisplay}>
       <h1 style={correctStyle}>✨Correct✨</h1>

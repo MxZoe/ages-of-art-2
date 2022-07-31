@@ -29,6 +29,7 @@ const SortableItem = (props) => {
 
   return (
     <div style={itemStyle} ref={setNodeRef} {...attributes} {...listeners}>
+      
       {props.id}
 
     </div>

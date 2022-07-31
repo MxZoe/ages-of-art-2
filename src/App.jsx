@@ -15,16 +15,29 @@ import { arrayMove, insertAtIndex, removeAtIndex } from "./utils/array";
 function App() {
 
   const [items, setItems] = useState({
-    group1: [RandomRange(1,1000),RandomRange(1,1000), RandomRange(1,1000), RandomRange(1,1000), RandomRange(1,1000),RandomRange(1,1000)],  
+    group1: [],  
   })
+  const [value, setValue] =useState(4);
+  let newItems = {...items}
+  const handleChange = (event) => {
+    setValue(event.target.value);
+    
+    for(let i=0;i<=value; i++){
+      newItems.group1.push(RandomRange(1,1000));
+    }
+    setItems(newItems);
+    
+  }
 
-  const[isSorted, setSorted] = useState(false);
-
-  const sortedGroup = [...items.group1].sort();
-
+  let isSorted = false;
+  let sortedGroup = items.group1.map((i)=>{return i})
+  sortedGroup = sortedGroup.sort();
+ 
   function checkSorted(items, sorted){
-    if(items==sorted){
-      setSorted(true)
+    if(JSON.stringify(items)===JSON.stringify(sorted)){
+      return true;
+    } else{
+      return false;
     }
   }
 
@@ -59,9 +72,7 @@ function App() {
     }
   };
 
- 
-  
-  const handleDragEnd = ({ active, over }) => {
+  const handleOnDragEnd= ({ active, over }) => {
     if (!over) {
       return;
     }
@@ -71,8 +82,6 @@ function App() {
       const overContainer = over.data.current?.sortable.containerId || over.id;
       const activeIndex = active.data.current.sortable.index;
       const overIndex = over.data.current?.sortable.index || 0;
-      checkSorted(items.group1, [...items.group1].sort());
-      console.log(isSorted)
       setItems((items) => {
         let newItems;
         if (activeContainer === overContainer) {
@@ -85,41 +94,53 @@ function App() {
             )
           };
         } 
-          
-        
-       
           return newItems;
-          
-        
-        
-      });      
+ 
+      });   
     }
   };
 
+ 
 
 
-  const containerStyle = { display: "flex"};
-  const seperateStyle ={margin: "5% 40% 5% 40%"}
   const droppableStyle0 = {
     padding: "20px 10px",
-    border: "1px solid black",
+    border: "2px solid gray",
     borderRadius: "5px",
     maxHeight: 1000,
     maxWidth: 70,
     margin: "5% 40% 5% 40%",
   };
  
-  const sortDisplay = isSorted ? {display: "inline"} : {display:"none"}
+  const sortDisplay = checkSorted(items.group1, sortedGroup) ? {display: "inline"} : {display:"none"}
+  const correctStyle = {margin: "5%  35% 5% 35%"}
+  const dropdownStyle = {display: "inline",margin: "5%  35% 5% 35%"}
+  const optionStyle = {margin: "5%  35% 5% 35%"}
+  const labelStyle = {margin: "0% 1% 0% 0%"}
   return (
     
     <DndContext
-    
+      
       sensors={sensors}
-      onDragEnd={handleDragEnd}
+      onDragEnd={handleOnDragEnd}
       onDragOver={handleDragOver}
     >
+     
+      <div style={dropdownStyle}>
+      <label>
+       <span style={labelStyle}>Choose how many numbers: </span>   
+        <select value={value} onChange={handleChange} style={optionStyle}>
+        <option value={0}></option>
+          <option value={3}>3</option>
+          <option value={4}>4</option>
+          <option value={5}>5</option>
+          <option value={6}>6</option>
+          <option value={7}>7</option>
+        </select>
+      </label>
+      </div>
       <div className="sorted" style={sortDisplay}>
-      <h1>Paintings Sorted!!!</h1>
+      <h1 style={correctStyle}>✨Correct✨</h1>
       </div>
 
         {Object.keys(items).map((group) => (
@@ -131,7 +152,8 @@ function App() {
       
     </DndContext>
     
-  );
-}
+    );
+  }
+
 
 export default App;
